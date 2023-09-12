@@ -1,0 +1,24 @@
+.w-150px { width: 150px; }
+.w-20 { width: 20%; }
+.w-40 { width: 40%; }
+.h-10 { height: 10%; }
+
+.rounded-e-xl {
+    border-top-right-radius: 1.5rem;
+    border-bottom-right-radius: 1.5rem;
+}
+
+.anim {
+  transition-duration: 250ms;
+  transition-timing-function: ease;
+}
+
+.bgimg {
+    background: url('/bg.jpg') no-repeat center center fixed;
+}
+.bgblur {
+    backdrop-filter: blur(10px);
+}
+.bgbg {
+    background-color: rgba(0,0,0, 0.4);
+}

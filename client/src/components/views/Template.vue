@@ -21,6 +21,11 @@
             to:"/RemoteControl",
             icon:"md-settingsremote",
             scale: 3.2
+        },
+        {
+            to:"/Requests",
+            icon:"bi-cloud-arrow-up-fill",
+            scale: 3.3
         }
     ];
 

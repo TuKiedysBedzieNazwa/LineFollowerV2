@@ -1,7 +1,7 @@
 import { createApp } from 'vue';
 import { createVuetify } from 'vuetify';
 import { OhVueIcon, addIcons } from "oh-vue-icons";
-import { FaDatabase, FaHome, MdSettingsremote } from "oh-vue-icons/icons";
+import { FaDatabase, FaHome, MdSettingsremote, BiCloudArrowUpFill } from "oh-vue-icons/icons";
 
 import * as directives from 'vuetify/directives';
 import * as components from 'vuetify/components';
@@ -22,7 +22,12 @@ const vuetify = createVuetify({
 });
 
 
-addIcons(FaDatabase, FaHome, MdSettingsremote);
+addIcons(
+    FaDatabase,
+    FaHome,
+    MdSettingsremote,
+    BiCloudArrowUpFill
+);
 
 const app = createApp(Template);
 

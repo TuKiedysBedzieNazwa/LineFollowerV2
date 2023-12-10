@@ -5,7 +5,7 @@
     const testVal = ref<string>('empty');
 
     const getTemperature = () => {
-        fetch('/api/test').then(
+        fetch('/api/linefollower').then(
             res => res.json()
         ).then(
             res => console.log(res)

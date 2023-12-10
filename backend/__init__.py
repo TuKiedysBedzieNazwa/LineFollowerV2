@@ -1,33 +1,80 @@
+import json
 from flask import Flask, request
-import sqlite3, json
+from .connectToDatabase import connectDB
+from .rowLimiter import rowLimiter
 
 app = Flask(__name__)
-
-def connectDB():
-    connection = sqlite3.connect('db/sql.db')
-    return connection
 
 @app.post('/database')
 def database():
     try:
-        connection = connectDB()
-        cursor = connection.cursor()
+        connection, cursor = connectDB()
 
         toReturn = cursor.execute(request.get_json()['input']).fetchall()
-        connection.commit()
         connection.close()
 
-        print(toReturn)
-        
         print(request.get_json())
         return {
             "ok": True,
             "data": toReturn
         }
     except:
+        connection.close()
         return {
             "ok": False,
             "data": "wrong input"
+        }
+
+@app.route('/linefollower', methods=[ 'POST', 'GET' ])
+def lineFolower():
+    connection, cursor = connectDB()
+
+    if request.method == "POST":
+        try:
+            data = request.get_json()
+
+            cursor.execute("""INSERT INTO linefollower (
+                temperature,
+                sens1,
+                sens2,
+                sens3,
+                sens4,
+                sens5,
+                sens6
+            ) VALUES(?,?,?,?,?,?,?);""", [
+                data['temperature'],
+                data['sens1'],
+                data['sens2'],
+                data['sens3'],
+                data['sens4'],
+                data['sens5'],
+                data['sens6']
+            ])
+
+            rowLimiter(cursor)
+
+            connection.commit()
+            connection.close()
+            return {
+                "ok": True
+            }
+
+        except:
+            connection.close()
+            return {
+                'ok': False
+            }
+
+    elif request.method == "GET":
+
+        toReturn = cursor.execute("SELECT * FROM linefollower;").fetchall()
+
+        rowLimiter(cursor)
+
+        connection.close()
+        return {
+            "ok": True,
+            "data": toReturn
         }
 
 @app.get('/test')
@@ -36,10 +83,8 @@ def testGet():
 
 @app.post('/test')
 def testPost():
-    print(request.data.decode('utf-8'))
+    print(request.get_json())
 
-    global var
-    var = request.data.decode('utf-8')
     return "Data Received"
 
 if __name__ == '__main__':

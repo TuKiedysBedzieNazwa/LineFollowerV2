@@ -37,6 +37,11 @@ lastSensor = -1
 ticks = 0
 
 
+engineSpeed1 = machine.DAC(machine.Pin(25))
+engineSpeed2 = machine.DAC(machine.Pin(26))
+
+
+
 while True:
 
     sensor=[
